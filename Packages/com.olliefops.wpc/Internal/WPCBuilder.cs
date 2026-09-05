@@ -21,11 +21,11 @@ namespace WPC.Builder
     {
         public int callbackOrder => -10010;
         
-        private static readonly string BuildsPath = $"Packages/com.byollie.wpc/Temp";
+        private static readonly string BuildsPath = $"Packages/com.olliefops.wpc/Temp";
 
         public bool OnPreprocessAvatar(GameObject avatarGameObject)
         {
-            if (!AssetDatabase.IsValidFolder(BuildsPath)) AssetDatabase.CreateFolder("Packages/com.byollie.wpc", "Temp");
+            if (!AssetDatabase.IsValidFolder(BuildsPath)) AssetDatabase.CreateFolder("Packages/com.olliefops.wpc", "Temp");
             WPCSetup[] wpcSetups = avatarGameObject.GetComponentsInChildren<WPCSetup>();
             string avatarName = avatarGameObject.name.Replace("(Clone)", "").Trim();
             
