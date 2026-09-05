@@ -1,0 +1,21 @@
+{
+    "name": "com.byollie.wpc",
+    "rootNamespace": "WPC",
+    "references": [
+        "GUID:cd59bf9231294ffab8427690942c6a35",
+        "GUID:b906909fcc54f634db50f2cad0f988d9",
+        "GUID:6e9c6119ac4eb334284fb7b4bc6d1f05"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "PS5"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
