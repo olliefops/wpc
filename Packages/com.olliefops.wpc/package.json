@@ -4,6 +4,7 @@
   "version": "0.4.3",
   "description": "Creates a system that allows your friends to change selected parameters.",
   "dependencies": {},
+  "hideInEditor": false,
   "gitDependencies": {},
   "vpmDependencies": {
     "com.vrchat.avatars": "3.10.5",
