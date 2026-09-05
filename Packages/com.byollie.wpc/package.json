@@ -1,8 +1,8 @@
 {
   "name": "com.byollie.wpc",
-  "displayName": "WPC",
-  "version": "0.4.0",
-  "description": "WPC - Wireless Parameter Controller, generates a system that allows your friends to change selected parameters.",
+  "displayName": "Wireless Parameter Controller",
+  "version": "0.4.1",
+  "description": "Creates a system that allows your friends to change selected parameters.",
   "dependencies": {},
   "gitDependencies": {},
   "vpmDependencies": {
