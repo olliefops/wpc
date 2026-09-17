@@ -30,14 +30,18 @@ namespace WPC.Builder
             string avatarName = avatarGameObject.name.Replace("(Clone)", "").Trim();
             
             string avatarBuildPath = $"{BuildsPath}/{avatarName}";
-            if (!AssetDatabase.IsValidFolder(avatarBuildPath))
+            if (AssetDatabase.IsValidFolder(avatarBuildPath))
             {
                 if (AssetDatabase.DeleteAsset(avatarBuildPath))
                 {
-                    Debug.Log("WPC: Deleted Avatar Folder");
+                    Debug.Log("WPC: Deleted avatar folder");
                 }
-                AssetDatabase.CreateFolder(BuildsPath, avatarName);
+                else
+                {
+                    Debug.LogError("WPC: Failed to delete avatar folder");
+                }
             }
+            AssetDatabase.CreateFolder(BuildsPath, avatarName);
             
             foreach (WPCSetup wpcSetup in wpcSetups)
             {
