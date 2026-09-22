@@ -56,6 +56,9 @@ namespace WPC.Builder
                         SetupController(wpcSetup, avatarName);
                         break;
                 }
+                
+                wpcSetup.transform.SetParent(avatarGameObject.transform, false);
+                wpcSetup.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             }
 
             return true;
@@ -66,7 +69,6 @@ namespace WPC.Builder
             GameObject container = wpcSetup.gameObject;
             string avatarBuildPath = $"{BuildsPath}/{avatarName}";
             if (!AssetDatabase.IsValidFolder(avatarBuildPath)) AssetDatabase.CreateFolder(BuildsPath, avatarName);
-            container.transform.position = new Vector3(0, 0, 0);
             container.SetActive(false);
 
             // Create Animator & VRCMenu & VRCParameters
@@ -87,7 +89,8 @@ namespace WPC.Builder
                 
                 // Create Receiver
                 GameObject receiverGameObject =  new GameObject();
-                receiverGameObject.transform.SetParent(container.transform);
+                receiverGameObject.transform.SetParent(container.transform, false);
+                receiverGameObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
                 receiverGameObject.name = receiver.name;
                 
                 // Add Contact Receiver     
@@ -127,7 +130,6 @@ namespace WPC.Builder
             GameObject container = wpcSetup.gameObject;
             string avatarBuildPath = $"{BuildsPath}/{avatarName}";
             if (!AssetDatabase.IsValidFolder(avatarBuildPath)) AssetDatabase.CreateFolder(BuildsPath, avatarName);
-            container.transform.position = new Vector3(0, 0, 0);
 
             // Create Animator & VRCMenu & VRCParameters
             AnimatorController fxController = AnimatorController.CreateAnimatorControllerAtPath($"{avatarBuildPath}/{wpcSetup.secretKey}_Controller_Animator.controller");
@@ -145,7 +147,8 @@ namespace WPC.Builder
                 // Create Controller
                 GameObject controllerGameObject =  new GameObject();
                 controllerGameObject.SetActive(false);
-                controllerGameObject.transform.SetParent(container.transform);
+                controllerGameObject.transform.SetParent(container.transform, false);
+                controllerGameObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
                 controllerGameObject.name = receiver.name;
                 
                 // Add Contact Sender   
