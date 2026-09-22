@@ -45,6 +45,8 @@ namespace WPC.Builder
             
             foreach (WPCSetup wpcSetup in wpcSetups)
             {
+                wpcSetup.transform.SetPositionAndRotation(avatarGameObject.transform.position, avatarGameObject.transform.rotation);
+                
                 switch (wpcSetup.setupType)
                 {
                     case 0:
@@ -56,9 +58,6 @@ namespace WPC.Builder
                         SetupController(wpcSetup, avatarName);
                         break;
                 }
-                
-                wpcSetup.transform.SetParent(avatarGameObject.transform, false);
-                wpcSetup.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             }
 
             return true;
