@@ -7,8 +7,8 @@
   "hideInEditor": false,
   "gitDependencies": {},
   "vpmDependencies": {
-    "com.vrchat.avatars": "3.10.5",
-    "com.vrcfury.vrcfury": "1.1427.0"
+    "com.vrchat.avatars": "3.10.^",
+    "com.vrcfury.vrcfury": "1.1427.^"
   },
   "author": {
     "name": "OllieFops",
