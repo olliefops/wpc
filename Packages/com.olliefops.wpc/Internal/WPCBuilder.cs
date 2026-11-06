@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Linq;
 using com.vrcfury.api;
 using com.vrcfury.api.Actions;
@@ -141,7 +142,7 @@ namespace WPC.Builder
             
             foreach (var receiver in wpcSetup.receivers)
             {
-                string parameterName = $"{wpcSetup.secretKey}_{receiver.name}";
+                string parameterName = $"{wpcSetup.secretKey}_{receiver.name.Replace(@"\/", "-").Replace(@"/", "_")}";
                 
                 // Create Controller
                 GameObject controllerGameObject =  new GameObject();
@@ -161,31 +162,32 @@ namespace WPC.Builder
                 
                 // Create Controller Toggle
                 fxController.AddParameter(parameterName, AnimatorControllerParameterType.Float);
-                AnimationClip controllerAnimation = WPCUtils.CreateGOStateAnim(controllerGameObject, true, 0f, avatarBuildPath, $"{parameterName}_On");
-                WPCUtils.AddVRCParameter(vrcParameters, parameterName, VRCExpressionParameters.ValueType.Bool, 0f, false, true);
+                AnimationClip controllerAnimation = WPCUtils.CreateGOStateAnim(controllerGameObject, true, 0f, avatarBuildPath, $"{parameterName.Replace("/", "_").Replace(" ", "-")}_On");
+                WPCUtils.AddVRCParameter(vrcParameters, parameterName.Replace("/", "_").Replace(" ", "-"), VRCExpressionParameters.ValueType.Bool, 0f, false, true);
                 WPCUtils.AddToggleLayer(fxController, controllerAnimation, parameterName);
                 
-                string[] vrcMenuItems = receiver.name.Split('/');
+                string[] vrcMenuItems = Regex.Split(receiver.name, @"(?<!\\)/");
                 VRCExpressionsMenu vrcSubMenu = vrcMenu;
-                
+
                 foreach (var vrcMenuItem in vrcMenuItems)
                 {
                     string subMenuPath = $"{avatarBuildPath}/{wpcSetup.secretKey}_Controller_SubMenu_{vrcMenuItem}.asset";
                     
                     if (vrcMenuItem == vrcMenuItems.Last())
                     {
-                        WPCUtils.AddVRCMenuToggle(vrcSubMenu, vrcMenuItem, VRCExpressionsMenu.Control.ControlType.Button, 1f, parameterName, null);
+                        WPCUtils.AddVRCMenuToggle(vrcSubMenu, vrcMenuItem.Replace(@"\/", "/"), VRCExpressionsMenu.Control.ControlType.Button, 1f, parameterName, null);
                     }
                     else
                     {
                         VRCExpressionsMenu newVRCSubMenu = AssetDatabase.LoadAssetAtPath<VRCExpressionsMenu>(subMenuPath);
+
                         if (newVRCSubMenu == null)
                         {
                             newVRCSubMenu = ScriptableObject.CreateInstance<VRCExpressionsMenu>();
                             AssetDatabase.CreateAsset(newVRCSubMenu, subMenuPath);
                         }
                         
-                        WPCUtils.AddVRCMenuToggle(vrcSubMenu, vrcMenuItem, VRCExpressionsMenu.Control.ControlType.SubMenu, 0f, "", newVRCSubMenu);
+                        WPCUtils.AddVRCMenuToggle(vrcSubMenu, vrcMenuItem.Replace(@"\/", "/"), VRCExpressionsMenu.Control.ControlType.SubMenu, 0f, "", newVRCSubMenu);
                         vrcSubMenu = newVRCSubMenu;
                     }
                 }
