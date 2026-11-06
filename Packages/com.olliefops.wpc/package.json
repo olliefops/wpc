@@ -6,10 +6,7 @@
   "dependencies": {},
   "hideInEditor": false,
   "gitDependencies": {},
-  "vpmDependencies": {
-    "com.vrchat.avatars": "3.10.^",
-    "com.vrcfury.vrcfury": "1.1427.^"
-  },
+  "vpmDependencies": {},
   "author": {
     "name": "OllieFops",
     "email": "hey@olliefops.com"
