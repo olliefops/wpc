@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 using HarmonyLib;
 using JetBrains.Annotations;
 using UnityEditor;
@@ -45,7 +45,7 @@ namespace WPC.Utils
         
             // Save the animation asset.
             if (!AssetDatabase.IsValidFolder($"{avatarBuildPath}/Animations")) AssetDatabase.CreateFolder(avatarBuildPath, "Animations");
-            AssetDatabase.CreateAsset(animationClip, $"{avatarBuildPath}/Animations/{animationName.Replace("/", "_")}.anim");
+            AssetDatabase.CreateAsset(animationClip, $"{avatarBuildPath}/Animations/{animationName}.anim");
             AssetDatabase.SaveAssets();
         
             return animationClip;
@@ -54,7 +54,7 @@ namespace WPC.Utils
         public static void AddVRCMenuToggle(VRCExpressionsMenu menu, string name, VRCExpressionsMenu.Control.ControlType type, float value, [Optional] string parameterName, [Optional] VRCExpressionsMenu subMenu, bool checkIfExists = true)
         {
             if (checkIfExists && MenuToggleExists(menu, name)) return;
-            
+
             VRCExpressionsMenu.Control control = new VRCExpressionsMenu.Control();
             
             if (type == VRCExpressionsMenu.Control.ControlType.SubMenu)
@@ -69,7 +69,7 @@ namespace WPC.Utils
             }
             
             VRCExpressionsMenu.Control.Parameter parameter = new VRCExpressionsMenu.Control.Parameter();
-            parameter.name = parameterName;
+	    parameter.name = parameterName;
                 
             control.name = name; 
             control.type = type;
