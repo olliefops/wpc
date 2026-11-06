@@ -80,7 +80,7 @@ namespace WPC.Builder
             
             foreach (var receiver in wpcSetup.receivers)
             {
-                string parameterName = $"{wpcSetup.secretKey}_{receiver.name}";
+                string parameterName = $"{wpcSetup.secretKey}_{receiver.name.Replace(@"\/", "-").Replace("/", "_").Replace(" ", "-")}";
                 
                 // Add Parameter & Layer
                 fxController.AddParameter(parameterName, AnimatorControllerParameterType.Float);
@@ -142,7 +142,7 @@ namespace WPC.Builder
             
             foreach (var receiver in wpcSetup.receivers)
             {
-                string parameterName = $"{wpcSetup.secretKey}_{receiver.name.Replace(@"\/", "-").Replace(@"/", "_")}";
+                string parameterName = $"{wpcSetup.secretKey}_{receiver.name.Replace(@"\/", "-").Replace("/", "_").Replace(" ", "-")}";
                 
                 // Create Controller
                 GameObject controllerGameObject =  new GameObject();
@@ -162,8 +162,8 @@ namespace WPC.Builder
                 
                 // Create Controller Toggle
                 fxController.AddParameter(parameterName, AnimatorControllerParameterType.Float);
-                AnimationClip controllerAnimation = WPCUtils.CreateGOStateAnim(controllerGameObject, true, 0f, avatarBuildPath, $"{parameterName.Replace("/", "_").Replace(" ", "-")}_On");
-                WPCUtils.AddVRCParameter(vrcParameters, parameterName.Replace("/", "_").Replace(" ", "-"), VRCExpressionParameters.ValueType.Bool, 0f, false, true);
+                AnimationClip controllerAnimation = WPCUtils.CreateGOStateAnim(controllerGameObject, true, 0f, avatarBuildPath, $"{parameterName}_On");
+                WPCUtils.AddVRCParameter(vrcParameters, parameterName, VRCExpressionParameters.ValueType.Bool, 0f, false, true);
                 WPCUtils.AddToggleLayer(fxController, controllerAnimation, parameterName);
                 
                 string[] vrcMenuItems = Regex.Split(receiver.name, @"(?<!\\)/");
@@ -171,11 +171,11 @@ namespace WPC.Builder
 
                 foreach (var vrcMenuItem in vrcMenuItems)
                 {
-                    string subMenuPath = $"{avatarBuildPath}/{wpcSetup.secretKey}_Controller_SubMenu_{vrcMenuItem}.asset";
+                    string subMenuPath = $"{avatarBuildPath}/{wpcSetup.secretKey}_Controller_SubMenu_{vrcMenuItem.Replace(" ", "-").Replace(@"\/", "-")}.asset";
                     
                     if (vrcMenuItem == vrcMenuItems.Last())
                     {
-                        WPCUtils.AddVRCMenuToggle(vrcSubMenu, vrcMenuItem.Replace(@"\/", "/"), VRCExpressionsMenu.Control.ControlType.Button, 1f, parameterName, null);
+                        WPCUtils.AddVRCMenuToggle(vrcSubMenu, vrcMenuItem.Replace(@"\/", "/"), VRCExpressionsMenu.Control.ControlType.Button, 1f, parameterName.Replace(" ", "-"), null);
                     }
                     else
                     {
