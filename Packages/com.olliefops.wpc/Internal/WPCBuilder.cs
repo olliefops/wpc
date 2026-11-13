@@ -107,10 +107,13 @@ namespace WPC.Builder
             
             // Create Receiver Toggle
             string receiverStateParameterName = $"{wpcSetup.secretKey}_Receiver";
+            string menuPath = wpcSetup.menuPath.Substring(0, wpcSetup.menuPath.LastIndexOf('/'));
+            string triggerName = wpcSetup.menuPath.Substring(wpcSetup.menuPath.LastIndexOf('/') + 1);
+            
             fxController.AddParameter(receiverStateParameterName, AnimatorControllerParameterType.Float);
             AnimationClip receiverOnAnimation = WPCUtils.CreateGOStateAnim(container, true, 0f, avatarBuildPath, $"{wpcSetup.secretKey}_Receiver_On");
             WPCUtils.AddVRCParameter(vrcParameters, receiverStateParameterName, VRCExpressionParameters.ValueType.Bool, 0f, true);
-            WPCUtils.AddVRCMenuToggle(vrcMenu, "Receiver", VRCExpressionsMenu.Control.ControlType.Toggle, 1f, receiverStateParameterName);
+            WPCUtils.AddVRCMenuToggle(vrcMenu, triggerName, VRCExpressionsMenu.Control.ControlType.Toggle, 1f, receiverStateParameterName);
             WPCUtils.AddToggleLayer(fxController, receiverOnAnimation, receiverStateParameterName);
             
             // Save VRCMenu & VRCParameters
@@ -120,7 +123,7 @@ namespace WPC.Builder
             // Setup VRCFury Full Controller
             FuryFullController fullController = FuryComponents.CreateFullController(wpcSetup.gameObject);
             fullController.AddController(fxController);
-            fullController.AddMenu(vrcMenu, wpcSetup.menuPath);
+            fullController.AddMenu(vrcMenu, menuPath);
             fullController.AddParams(vrcParameters);
             fullController.AddGlobalParam("*");
         }
@@ -171,7 +174,8 @@ namespace WPC.Builder
 
                 foreach (var vrcMenuItem in vrcMenuItems)
                 {
-                    string subMenuPath = $"{avatarBuildPath}/{wpcSetup.secretKey}_Controller_SubMenu_{vrcMenuItem.Replace(" ", "-").Replace(@"\/", "-")}.asset";
+                    string submenuKey = string.Join("__", vrcMenuItems.TakeWhile(x => x != vrcMenuItem).Append(vrcMenuItem) .Select(x => x.Replace(" ", "-").Replace(@"\/", "-")) );
+                    string subMenuPath = $"{avatarBuildPath}/{wpcSetup.secretKey}_Controller_SubMenu_{submenuKey}.asset";
                     
                     if (vrcMenuItem == vrcMenuItems.Last())
                     {

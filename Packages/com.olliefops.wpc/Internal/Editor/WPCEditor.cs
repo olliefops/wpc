@@ -21,37 +21,15 @@ namespace WPC.Editor
         {
             serializedObject.Update();
             
-            EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("Import"))
-            {
-                string path = EditorUtility.OpenFilePanel("Import JSON", "", "json");
-                if (string.IsNullOrEmpty(path)) return;
-                
-                string json = File.ReadAllText(path);
-                JsonUtility.FromJsonOverwrite(json, wpcSetup);
-                
-                EditorUtility.SetDirty(wpcSetup);
-            }
-            if (GUILayout.Button("Export"))
-            {
-                string json = JsonUtility.ToJson(wpcSetup, true);
-                string path = EditorUtility.SaveFilePanel("Export JSON", "", "", "json");
-
-                if (!string.IsNullOrEmpty(path))
-                {
-                    File.WriteAllText(path, json);
-                    Debug.Log($"Exported JSON to: {path}");
-                }
-            }
-            EditorGUILayout.EndHorizontal();
-            
             int newType = EditorGUILayout.Popup(
                 "Type",
                 serializedObject.FindProperty("setupType").intValue,
                 types
             );
+
             EditorGUILayout.PropertyField(serializedObject.FindProperty("menuPath"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("secretKey"));
+            
             if (GUILayout.Button("Generate Secret Key"))
             {
                 System.Random random = new System.Random();

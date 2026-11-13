@@ -7,7 +7,7 @@ namespace WPC {
     public class WPCSetup : MonoBehaviour, IEditorOnly
     {
         public string menuPath;
-        public string secretKey;
+        public string secretKey; 
         public WPCReceiver[] receivers;
         public int setupType;
 
