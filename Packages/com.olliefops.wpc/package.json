@@ -1,7 +1,7 @@
 {
   "name": "com.olliefops.wpc",
   "displayName": "Wireless Parameter Controller",
-  "version": "0.4.13",
+  "version": "0.4.14",
   "description": "Creates a system that allows your friends to change selected parameters.",
   "dependencies": {},
   "hideInEditor": false,
